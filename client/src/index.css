@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+@layer utilities {
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .hide-scrollbar {
+    scrollbar-width: none;
+  }
+}
+--tw-bg-opacity: 1;
+body{
+  font-family: "poppins",sans-serif;
+   background-color: rgba(219, 234, 254);	
+
+}
+
