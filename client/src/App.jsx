@@ -14,10 +14,11 @@ import { fetchCart } from "./utils/fetchCart"
 import { fetchAddress } from "./utils/fetchAddress"
 import { setTotalPrice,setTotalQty } from "./redux/cartSlice"
 import { fetchOrder } from "./utils/fetchOrders"
+import CartMobile from "./components/CartForMobile"
 function App() {
     const dispatch = useDispatch();
      const cart = useSelector((state)=> state.cart.cart)
-   
+     const user = useSelector((state) => state.user.user)  
    useEffect(()=>{
           fetchUserDetails(dispatch,setUser);
           fetchCategory(dispatch,setCategory);
@@ -39,12 +40,14 @@ function App() {
       dispatch(setTotalPrice(price));
       dispatch(setTotalQty(qty));
      }
+
    })
 
   return<>
   <Header />
-    <main className = "min-h-[80vh">
+    <main className = "min-h-[80vh] relative">
       <Outlet />
+      <CartMobile />
     </main>
     <Footer />
     <Toaster/>

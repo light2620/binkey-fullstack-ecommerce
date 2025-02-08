@@ -6,13 +6,13 @@ import { useSelector } from "react-redux";
 import { valideURLConvert } from "../utils/validUrlConvert";
 import CategoryWiseProductDisplay from "../components/CategoryWiseProductDisplay";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 export default function Home(){
 
- 
  const categoryLoading = useSelector((state) => state.product.categoryLoading);
  const allCategory = useSelector((state) => state.product.category);
  const allProducts = useSelector((state) => state.product.products);
- console.log(allProducts)
+
  const allSubCategories = useSelector((state) => state.product.subCategory)
  
 
@@ -30,14 +30,15 @@ export default function Home(){
   return url
 }
 
-// const categoryToDisplay = allCategory.filter((category) =>  {
-//   return allProducts.some((item) => item.category.some((c) => c._id === category._id))
-// })
+const categoryToDisplay = allCategory.filter((category) =>  {
+  return allProducts.some((item) => item.category.some((c) => c._id === category._id))
+})
+
 
 
     return <>
      <section>
-        <div className = "m-auto w-full">
+        <div className = "m-auto w-[98%]">
             <div className= {`w-full h-full min-h-48 bg-blue-100 rounded ${!banner && "animate-pulse"}`}>
                  <img 
                  src={banner} 
@@ -68,7 +69,7 @@ export default function Home(){
             }))
                : 
                (
-                allCategory.map((c,index) => {
+                 allCategory.map((c,index) => {
                         
                         const redirectUrl =  handleRedirectProductListpage(c._id,c.name)
                     return (
@@ -98,7 +99,7 @@ export default function Home(){
         {/* category show section */}
           
        {
-        allCategory.map((c,index) => {
+         categoryToDisplay.map((c,index) => {
             return (
                 <CategoryWiseProductDisplay 
                   key={index + c?._id}
