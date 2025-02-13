@@ -67,7 +67,7 @@ const ForgotPassword = () => {
                         />
                     </div>
              
-                    <button disabled={!valideValue} className={` ${valideValue ? "bg-green-800 hover:bg-green-700" : "bg-gray-500" }    text-white py-2 rounded font-semibold my-3 tracking-wide`}>Send Otp</button>
+                    <button disabled={!valideValue} className={` ${valideValue ? "bg-green-800 hover:bg-green-700" : "bg-gray-500" } cursor-pointer   text-white py-2 rounded font-semibold my-3 tracking-wide`}>Send Otp</button>
 
                 </form>
 

@@ -9,7 +9,7 @@ export default function CartMobile(){
     const cart = useSelector((state) => state.cart.cart);
     const totalPrice = useSelector((state) => state.cart.totalPrice)
     const location = useLocation();
-    console.log(location)
+
    
     return cart.length !== 0 &&  location.pathname !== "/checkout" && <div>
           <div className="fixed flex p-2 items-center justify-between bottom-30 w-full  lg:hidden  bg-green-600 rounded shadow">

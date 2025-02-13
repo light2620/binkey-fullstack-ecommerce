@@ -7,6 +7,7 @@ import { generateRefreshToken } from "../utils/generateRefreshToken.js";
 import { generateOtp } from "../utils/generateOtp.js";
 import { otpForgetTemplate } from "../utils/otpEmailTemplate.js";
 import uploadImageClodinary from "../utils/uploadImageClodinary.js";
+import nodemailer from "nodemailer"
 async function  registerUserController(request,response) {
      
     try{
@@ -46,17 +47,33 @@ async function  registerUserController(request,response) {
       const save = await newUser.save();
       
       const verifyEmailUrl = `${process.env.FRONTEND_URL}/verify-email?code=${save._id}`
-      const verifyEmail = await sendEmail({
-        sendTo : email,
-        subject : "Verify email from binkeyit",
-        html : verifyEmailTemplate({
-            name,
-            url : verifyEmailUrl
-        })
+      const tranporter = nodemailer.createTransport({
+        service : "gmail",
+        auth : {
+          user: process.env.EMAIL,
+          pass: process.env.EMAIL_PASSWORD
+        }
       })
+      const mailOption = {
+        from : "shivamnegi896@gmail.com",
+        to : email,
+        subject : "Your email verification link",
+        text : `Link : ${verifyEmailUrl}`
+      }
+      try{
+
+        let sendMail = await tranporter.sendMail(mailOption);
+        console.log("Mail sent: ", sendMail.response);
+          
+      }catch(err){
+        console.log(err)
+        return response.json({
+            message  : err.message || err
+        })
+      }
 
       return response.json({
-        message : "User register successfully",
+        message :` Registration Success, Verification Link Sent to email ${email}`,
         error : false,
         success : true,
         data : save
@@ -230,11 +247,32 @@ async function forgotPasswordController(request,response){
             forgot_password_otp : otp,
             forgot_password_expiry : new Date(expiryTime).toISOString()
         })
-        await sendEmail({
-            sendTo : email,
-            subject : "OTP for password reset",
-            html : otpForgetTemplate(user.name,otp)
-          })
+        const otpHtml = otpForgetTemplate(user.name,otp)
+        const transporter = nodemailer.createTransport({
+            service : "gmail",
+            auth : {
+                user : process.env.EMAIL,
+                pass : process.env.EMAIL_PASSWORD
+            }
+        })
+        const mailOptions = {
+            from : "shivamnegi896@gmail.com",
+            to : email,
+            subject : "Forgot password OTP",
+            text : `Your Otp is ${otp}`,
+            html : otpHtml
+        }
+        try{ 
+            const sendmail = await transporter.sendMail(mailOptions)
+            console.log("Email sent: " + sendmail.response);
+
+        }catch(err){
+            return response.json({
+                message : "otp sent failed, retry",
+                error  : false,
+                success : true
+             })
+        }
          return response.json({
             message : "otp sent to your mail",
             error  : false,

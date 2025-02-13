@@ -20,6 +20,7 @@ import ProductListingPage from "../pages/ProductListingPage";
 import UserMenuMobile from "../components/useMenuMobile";
 import CheckoutPage from "../pages/CheckoutPage";
 import Nodata from "../components/No-data";
+import EmailVerify from "../pages/EmailVerification";
 const router = createBrowserRouter([
     {
         path : '/',
@@ -118,7 +119,11 @@ const router = createBrowserRouter([
             {
                 path : "no-data",
                 element : <Nodata/>
-            }
+            },
+            {
+                path : "verify-email",
+            element : <EmailVerify />
+        }
         ]
     }
 ])

@@ -17,9 +17,9 @@ const ResetPassword = () => {
   const [showConfirmPassword,setShowConfirmPassword] = useState(false)
 
   const valideValue = Object.values(data).every(el => el)
-
+ console.log(location)
   useEffect(()=>{
-    if(!(location?.state?.data?.success)){
+    if(!(location?.state)){
         navigate("/")
     }
     

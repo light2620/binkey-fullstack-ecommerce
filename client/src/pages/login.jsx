@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 import { userLoginApi } from '../api/user.api';
 import { fetchUserDetails } from '../utils/fetchUserDetails';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../redux/userSlice';
 const Login = () => {
     const [data, setData] = useState({
@@ -15,8 +15,8 @@ const Login = () => {
     const [showPassword, setShowPassword] = useState(false)
     const navigate = useNavigate()
     const dispatch = useDispatch();
-    
-
+    const user = useSelector((state) => state.user.user)
+    console.log(user)
     const handleChange = (e) => {
         const { name, value } = e.target
 
@@ -59,6 +59,8 @@ const Login = () => {
         }
 
     }
+
+    
     return (
         <section className='w-full  container mx-auto px-2'>
             <div className='bg-white min-h-[80vh] my-4 w-full max-w-lg mx-auto rounded p-7'>
