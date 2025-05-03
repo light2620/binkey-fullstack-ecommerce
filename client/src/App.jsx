@@ -18,7 +18,6 @@ import CartMobile from "./components/CartForMobile"
 function App() {
     const dispatch = useDispatch();
      const cart = useSelector((state)=> state.cart.cart)
-     const user = useSelector((state) => state.user.user)  
    useEffect(()=>{
           fetchUserDetails(dispatch,setUser);
           fetchCategory(dispatch,setCategory);

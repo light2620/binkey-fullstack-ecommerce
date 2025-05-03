@@ -49,6 +49,7 @@ const Login = () => {
                     password: "",
                 });
                 navigate("/")
+                window.location.reload();
             }
         }catch(err){
             if(err || err.response.data){
